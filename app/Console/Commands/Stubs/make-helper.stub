@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Helpers;
+
+class GenericHelper
+{
+    public static function get()
+    {
+
+    }
+}
