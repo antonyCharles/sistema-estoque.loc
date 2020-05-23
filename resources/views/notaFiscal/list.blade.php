@@ -1,5 +1,6 @@
 @extends('temps.master')
 @section('title', trans('notaFiscal.title'))
+@section('title-icone', 'fas fa-file-alt')
 
 @section('css-view')
 
@@ -10,21 +11,15 @@
 
 @section('conteudo-view')
 <div class="row">
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="page-header border-bottom">
-            <h2 class="pageheader-title  d-inline-block"><i class="fas fa-file-alt"></i> @lang('notaFiscal.title')</h2>
-        </div>
-    </div>
-</div>
-
-@include('temps.forms.message')
-
-<div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">@lang('notaFiscal.subTitleListar')</h4>
-                <a href="{{ action('NotaFiscalController@create') }}" class="btn btn-success btn-sm">@lang('botao.Incluir')</a>
+                @if(Auth::user()->hasRole(trans('roles.notaFiscalCreate')))
+                <a href="{{ action('NotaFiscalController@create') }}" class="btn btn-success btn-sm">
+                    <i class="fas fa-plus"></i> @lang('botao.Incluir')
+                </a>
+                @endif
             </div>
             <div class="card-body">
                 @if(isset($notasFiscais) && count($notasFiscais) > 0)
@@ -52,11 +47,17 @@
                                         <td></td>
                                         <td class="text-right">
                                             <div class="btn-group ml-auto">
+                                                @if(Auth::user()->hasRole(trans('roles.notaFiscalRead')))
                                                 <a href="{{ action('NotaFiscalController@detalhe',$i->nf_codigo) }}" class="btn btn-sm btn-outline-light">@lang('botao.Detalhes')</a>
+                                                @endif
+                                                @if(Auth::user()->hasRole(trans('roles.notaFiscalUpdate')))
                                                 <a href="{{ action('NotaFiscalController@update',$i->nf_codigo) }}" class="btn btn-sm btn-outline-light">@lang('botao.Editar')</a>
+                                                @endif
+                                                @if(Auth::user()->hasRole(trans('roles.notaFiscalDelete')))
                                                 <a href="{{ action('NotaFiscalController@delete',$i->nf_codigo) }}" class="btn btn-sm btn-outline-light">
                                                     <i class="far fa-trash-alt"></i>
                                                 </a>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

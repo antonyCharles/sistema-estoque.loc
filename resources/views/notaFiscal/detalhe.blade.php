@@ -1,5 +1,6 @@
 @extends('temps.master')
 @section('title', trans('notaFiscal.title'))
+@section('title-icone', 'fas fa-file-alt')
 
 @section('css-view')
 
@@ -11,22 +12,16 @@
 
 @section('conteudo-view')
 <div class="row">
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="page-header border-bottom">
-            <h2 class="pageheader-title  d-inline-block"><i class="fas fa-file-alt"></i> @lang('notaFiscal.title')</h2>
-        </div>
-    </div>
-</div>
-
-@include('temps.forms.message')
-
-<div class="row">
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header">
                 <h4 class="card-title">@lang('notaFiscal.subTitleDetalhe')</h4>
+                @if(Auth::user()->hasRole(trans('roles.notaFiscalUpdate')))
                 <a href="{{ action('NotaFiscalController@update',$notaFiscal->nf_codigo) }}" class="btn btn-info btn-sm">@lang('botao.Alterar')</a>
-                <a href="javascript:history.back()" class="btn btn-outline-light btn-sm"><i class="fas fa-angle-left"></i> @lang('botao.Voltar')</a>
+                @endif
+                <a href="{{ URL::previous() }}" class="btn btn-outline-light btn-sm">
+                    <i class="fas fa-angle-left"></i> @lang('botao.Voltar')
+                </a>
             </div>
 			<div class="card-body">
                 <div class="row">
@@ -57,7 +52,9 @@
         <div class="card">
 			<div class="card-header">
                 <h4 class="card-title">@lang('contaReceber.title')</h4>
+                @if(Auth::user()->hasRole(trans('roles.contaReceberCreate')))
                 <a href="{{ action('ContaReceberController@create',$notaFiscal->nf_codigo) }}" class="btn btn-success btn-sm">@lang('botao.Incluir') @lang('contaReceber.title')</a>
+                @endif
             </div>
 			<div class="card-body">
             @if(isset($notaFiscal->contasReceber) && count($notaFiscal->contasReceber) > 0)
@@ -81,10 +78,14 @@
                                     <td>{{ $i->cr_observacoes }}</td>
                                     <td class="text-right">
                                         <div class="btn-group ml-auto">
+                                            @if(Auth::user()->hasRole(trans('roles.contaReceberUpdate')))
                                             <a href="{{ action('ContaReceberController@update',['nf_codigo' => $i->nf_codigo, 'id' => $i->cr_codigo ]) }}" class="btn btn-sm btn-outline-light">@lang('botao.Editar')</a>
+                                            @endif
+                                            @if(Auth::user()->hasRole(trans('roles.contaReceberDelete')))
                                             <a href="{{ action('ContaReceberController@delete',['nf_codigo' => $i->nf_codigo, 'id' => $i->cr_codigo ]) }}" class="btn btn-sm btn-outline-light">
                                                 <i class="far fa-trash-alt"></i>
                                             </a>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -103,7 +104,9 @@
         <div class="card">
 			<div class="card-header">
                 <h4 class="card-title">@lang('contaPagar.title')</h4>
+                @if(Auth::user()->hasRole(trans('roles.contaPagarCreate')))
                 <a href="{{ action('ContaPagarController@create',$notaFiscal->nf_codigo) }}" class="btn btn-success btn-sm">@lang('botao.Incluir') @lang('contaPagar.title')</a>
+                @endif
            </div>
 			<div class="card-body">
             @if(isset($notaFiscal->contasPagar) && count($notaFiscal->contasPagar) > 0)
@@ -127,10 +130,14 @@
                                     <td>{{ $i->cp_observacoes }}</td>
                                     <td class="text-right">
                                         <div class="btn-group ml-auto">
+                                            @if(Auth::user()->hasRole(trans('roles.contaPagarUpdate')))
                                             <a href="{{ action('ContaPagarController@update',['nf_codigo' => $i->nf_codigo, 'id' => $i->cp_codigo ]) }}" class="btn btn-sm btn-outline-light">@lang('botao.Editar')</a>
+                                            @endif
+                                            @if(Auth::user()->hasRole(trans('roles.contaPagarDelete')))
                                             <a href="{{ action('ContaPagarController@delete',['nf_codigo' => $i->nf_codigo, 'id' => $i->cp_codigo ]) }}" class="btn btn-sm btn-outline-light">
                                                 <i class="far fa-trash-alt"></i>
                                             </a>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

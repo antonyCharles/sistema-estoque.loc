@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use Exception;
-use App\Models\Funcionario;
+use App\Models\User;
 use App\Repositories\Repository;
 use App\Helpers\MonetarioHelper;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +16,7 @@ class FuncionarioRepository extends Repository implements IFuncionarioRepository
 	public function getAll() : Collection
 	{
 		try{
-			return Funcionario::all();
+			return User::all();
 		}
 		catch(QueryException $e)
 		{
@@ -28,10 +28,10 @@ class FuncionarioRepository extends Repository implements IFuncionarioRepository
 		}
 	}
 	
-	public function getId(int $id) : Funcionario
+	public function getId(int $id) : User
 	{
 		try{
-			return Funcionario::find($id);
+			return User::find($id);
 		}
 		catch(QueryException $e)
 		{
@@ -46,7 +46,7 @@ class FuncionarioRepository extends Repository implements IFuncionarioRepository
 	public function GetFuncionarioAllSelect() : Collection
 	{
 		try{
-			return Funcionario::pluck('fun_nome','fun_codigo');
+			return User::pluck('name','fun_codigo');
 		}
 		catch(QueryException $e)
 		{
@@ -58,12 +58,28 @@ class FuncionarioRepository extends Repository implements IFuncionarioRepository
 		}
 	}
 
+	public function getUserByEmail(string $email) : User
+	{
+		try
+		{
+			$user = User::where('email',$email)->first();
+		}
+		catch(Exception $e)
+		{
+			throw new Exception(trans('exceptions.querySelect', ['message' => $e->getMessage()]));
+		}
+
+		return $user;
+	}
+
 	public function insert(array $dados) : bool
 	{
 		try
 		{
 			$dados['fun_salario'] = MonetarioHelper::fromatarValorDB($dados['fun_salario']);
-			Funcionario::create($dados);
+			$dados['password'] = $this->createPassword($dados['email'], $dados['password']);
+			$dados['created_at'] = date("Y-m-d H:i:s");
+			User::create($dados);
 		}
 		catch(QueryException $e)
 		{
@@ -81,8 +97,14 @@ class FuncionarioRepository extends Repository implements IFuncionarioRepository
 	{
 		try
 		{
-			$func = Funcionario::findOrFail($id);
+			$func = User::findOrFail($id);
 			$dados['fun_salario'] = MonetarioHelper::fromatarValorDB($dados['fun_salario']);
+
+			if(in_array('password',$dados))
+			{
+				throw new Exception("Não é permitido alterar senha por este metodo!");
+			}
+
 			$func->update($dados);
 		}
 		catch(QueryException $e)
@@ -97,11 +119,31 @@ class FuncionarioRepository extends Repository implements IFuncionarioRepository
 		return true;
 	}
 
+	public function updateUserPassword(string $email, string $password) : bool
+    {
+        try
+        {
+            $user =  User::where('email', $email)->first();
+            
+            if(!$user)
+                throw new Exception(trans('excPasswordReset.emailNotUser'));
+
+            $user->password = $this->createPassword($email, $password);
+            $user->update();
+        }
+        catch(Exception $e)
+        {
+            throw new Exception(trans('exceptions.queryUpdate', ['message' => $e->getMessage()]));
+        }
+
+        return true;
+    }
+
 	public function delete(int $id, string $campo = 'fun_codigo') : bool
 	{
 		try
 		{
-			Funcionario::where($campo, '=', $id)->delete();
+			User::where($campo, '=', $id)->delete();
 		}
 		catch(QueryException $e)
 		{
@@ -117,4 +159,9 @@ class FuncionarioRepository extends Repository implements IFuncionarioRepository
 
 		return true;
 	}
+
+	private function createPassword(string $email, string $password)
+    {
+        return bcrypt(trim($email) . trim($password));
+    }
 }

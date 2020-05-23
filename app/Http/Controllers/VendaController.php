@@ -6,22 +6,39 @@ use Illuminate\Http\Request;
 use App\Http\Requests\VendaRequest;
 use App\Http\Requests\VendaUpdateRequest;
 use App\Enums\StatusEnum;
-use App\Repositories\VendaRepository;
-use App\Repositories\FuncionarioRepository;
-use App\Repositories\ItensVendaRepository;
-use App\Repositories\TipoPagtoRepository;
-use App\Repositories\ProdutoRepository;
-use App\Repositories\NotaFiscalRepository;
+use App\Repositories\Interfaces\IVendaRepository;
+use App\Repositories\Interfaces\IFuncionarioRepository;
+use App\Repositories\Interfaces\IItensVendaRepository;
+use App\Repositories\Interfaces\ITipoPagtoRepository;
+use App\Repositories\Interfaces\IProdutoRepository;
+use App\Repositories\Interfaces\INotaFiscalRepository;
 use Exception;
 use Session;
 
 class VendaController extends Controller
 {
     private $repository;
+    private $funcionarioRepository;
+    private $itensVendaRepository;
+    private $tipoPagtoRepository;
+    private $produtoRepository;
+    private $notaFiscalRepository;
 
-    public function __construct(VendaRepository $repository)
+    public function __construct(
+        IVendaRepository $repository,
+        IFuncionarioRepository $funcionarioRepository,
+        IItensVendaRepository $itensVendaRepository,
+        ITipoPagtoRepository $tipoPagtoRepository,
+        IProdutoRepository $produtoRepository,
+        INotaFiscalRepository $notaFiscalRepository
+    )
     {
         $this->repository = $repository;
+        $this->funcionarioRepository = $funcionarioRepository;
+        $this->itensVendaRepository = $itensVendaRepository;
+        $this->tipoPagtoRepository = $tipoPagtoRepository;
+        $this->produtoRepository = $produtoRepository;
+        $this->notaFiscalRepository = $notaFiscalRepository;
     }
 
     public function list()
@@ -61,17 +78,13 @@ class VendaController extends Controller
     public function create()
     {
         try{
-            $repositoryFuncionario = new FuncionarioRepository();
-            $this->data['funcionarios'] = $repositoryFuncionario->GetFuncionarioAllSelect();
+            $this->data['funcionarios'] = $this->funcionarioRepository->GetFuncionarioAllSelect();
 
-            $serTipoPagto = new TipoPagtoRepository();
-            $this->data['tiposPagtos'] = $serTipoPagto->GetTipoPagtoAllSelect();
+            $this->data['tiposPagtos'] = $this->tipoPagtoRepository->GetTipoPagtoAllSelect();
 
-            $serNotaFiscal = new NotaFiscalRepository();
-            $this->data['notasfiscais'] = $serNotaFiscal->GetNotaFiscalAllSelect();
+            $this->data['notasfiscais'] = $this->notaFiscalRepository->GetNotaFiscalAllSelect();
 
-            $serProduto = new ProdutoRepository();
-            $this->data['produtos'] = $serProduto->GetAllEmEstoque();
+            $this->data['produtos'] = $this->produtoRepository->GetAllEmEstoque();
 
             $this->data['enumStatus'] = StatusEnum::get();
 
@@ -88,7 +101,7 @@ class VendaController extends Controller
         try
         {
             $dados = $request->all();
-            $result = $this->repository->insert($dados);
+            $result = $this->repository->createVendaCompleta($dados);
 
             return redirect()
                         ->action('VendaController@detalhe', $result)
@@ -111,11 +124,9 @@ class VendaController extends Controller
             if($this->data['venda'] == null)
                 throw new Exception(trans('msgErros.ItemIdNaoEncontrado',['id' => $id]));
 
-            $repositoryFuncionario = new FuncionarioRepository();
-            $this->data['funcionarios'] = $repositoryFuncionario->GetFuncionarioAllSelect();
+            $this->data['funcionarios'] = $this->funcionarioRepository->GetFuncionarioAllSelect();
 
-            $serTipoPagto = new TipoPagtoRepository();
-            $this->data['tiposPagtos'] = $serTipoPagto->GetTipoPagtoAllSelect();
+            $this->data['tiposPagtos'] = $this->tipoPagtoRepository->GetTipoPagtoAllSelect();
             
             $this->data['enumStatus'] = StatusEnum::get();
 

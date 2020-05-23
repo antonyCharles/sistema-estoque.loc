@@ -2,38 +2,47 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
+use Exception;
+use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
+use App\Services\LoginService;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
-    use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function __construct(LoginService $serv)
     {
-        $this->middleware('guest')->except('logout');
+        $this->service = $serv;
+        $this->data = [];
+    }
+
+    public function login()
+    {
+        if(Auth::check()){
+            return redirect()->route('dashboard');
+        }
+
+        return view('auth.login');
+    }
+
+    public function loginPost(LoginRequest $request)
+    {
+        $sLogin = new LoginService();
+
+        if($sLogin->credentialsValidate($request->email, $request->password))
+		{
+			return redirect()->route('dashboard');
+		}
+		else
+		{
+			return redirect()->back()->withErrors(trans('excLogin.incEmailPassword'));
+		}
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login');
     }
 }

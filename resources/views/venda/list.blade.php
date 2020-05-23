@@ -1,5 +1,6 @@
 @extends('temps.master')
 @section('title', trans('venda.title'))
+@section('title-icone', 'fas fa-shopping-cart')
 
 @section('css-view')
 @endsection
@@ -9,21 +10,15 @@
 
 @section('conteudo-view')
 <div class="row">
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="page-header border-bottom">
-            <h2 class="pageheader-title  d-inline-block"><i class="fas fa-shopping-cart"></i> @lang('venda.title')</h2>
-        </div>
-    </div>
-</div>
-
-@include('temps.forms.message')
-
-<div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">@lang('venda.subTitleListar')</h4>
-                <a href="{{ action('VendaController@create') }}" class="btn btn-success btn-sm">@lang('botao.Incluir')</a>
+                @if(Auth::user()->hasRole(trans('roles.vendaCreate')))
+                <a href="{{ action('VendaController@create') }}" class="btn btn-success btn-sm">
+                    <i class="fas fa-plus"></i> @lang('botao.Incluir')
+                </a>
+                @endif
             </div>
             <div class="card-body">
                 @if(isset($vendas) && count($vendas) > 0)
@@ -44,18 +39,24 @@
                                 @foreach($vendas as $i)
                                     <tr>
                                         <td>{{ $i->ven_codigo }}</td>
-                                        <td>{{ $i->funcionario->fun_nome }}</td>
+                                        <td>{{ $i->funcionario->name }}</td>
                                         <td>{{ $i->tipopagto->tpg_descricao }}</td>
                                         <td>{{ ViewHelper::getDateFormat($i->ven_datavenda) }}</td>
                                         <td>R$ {{ ViewHelper::getValorMonetarioFormat($i->ven_valortotal) }}</td>
                                         <td>{{ ViewHelper::getEnumLabel($enumStatus,$i->ven_status) }}</td>
                                         <td class="text-right">
                                             <div class="btn-group ml-auto">
+                                                @if(Auth::user()->hasRole(trans('roles.vendaRead')))
                                                 <a href="{{ action('VendaController@detalhe', $i->ven_codigo) }}" class="btn btn-sm btn-outline-light">@lang('botao.Detalhes')</a>
+                                                @endif
+                                                @if(Auth::user()->hasRole(trans('roles.vendaUpdate')))
                                                 <a href="{{ action('VendaController@update', $i->ven_codigo) }}" class="btn btn-sm btn-outline-light">@lang('botao.Alterar')</a>
+                                                @endif
+                                                @if(Auth::user()->hasRole(trans('roles.vendaDelete')))
                                                 <a href="{{ action('VendaController@delete', $i->ven_codigo) }}" class="btn btn-sm btn-outline-light">
                                                     <i class="far fa-trash-alt"></i>
                                                 </a>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

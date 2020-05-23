@@ -19,9 +19,6 @@
         <div class="dashboard-header">
             <nav class="navbar navbar-expand-lg bg-white fixed-top">
                 <a class="navbar-brand" href="{!! url('/'); !!}">Fatec <span>Sistema de Estoque</span></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
                 <div class="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto navbar-right-top">
                         <li class="nav-item dropdown nav-user">
@@ -47,7 +44,17 @@
         </div>
         <div class="dashboard-wrapper">
             <div class="dashboard-ecommerce">
-                <div class="container-fluid dashboard-content ">
+                <div class="container-fluid dashboard-content">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="page-header border-bottom">
+                                <h2 class="pageheader-title  d-inline-block">
+                                    <i class="@yield('title-icone')"></i> @yield('title')
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    @include('temps.forms.message')
                      @yield('conteudo-view')
                 </div>
                 <div class="footer">

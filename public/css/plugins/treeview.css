@@ -1,0 +1,15 @@
+.treegrid-indent {width:20px; height: 16px; display: inline-block; position: relative;}
+
+.treegrid-expander {width:20px; height: 16px; display: inline-block; position: relative; cursor: pointer;}
+
+.treegrid-expander-expanded, .treegrid-expander-collapsed{
+    font-size: 25px;
+    font-weight: bold;
+    color: #1f10ff;
+    vertical-align: top;
+    margin-right: 5px;
+}
+.treegrid-expander.fas{
+    font-size: 23px;
+    vertical-align: sub;
+}

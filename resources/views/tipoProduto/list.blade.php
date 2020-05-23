@@ -1,5 +1,6 @@
 @extends('temps.master')
 @section('title', trans('tipoProduto.title'))
+@section('title-icone', 'fas fa-clipboard-list')
 
 @section('css-view')
 
@@ -10,21 +11,15 @@
 
 @section('conteudo-view')
 <div class="row">
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="page-header border-bottom">
-            <h2 class="pageheader-title  d-inline-block"><i class="fas fa-clipboard-list"></i> @lang('tipoProduto.title')</h2>
-        </div>
-    </div>
-</div>
-
-@include('temps.forms.message')
-
-<div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">@lang('tipoProduto.subTitleListar')</h4>
-                <a href="{{ action('TipoProdutoController@create') }}" class="btn btn-success btn-sm">@lang('botao.Incluir')</a>
+                @if(Auth::user()->hasRole(trans('roles.tipoProdutoCreate')))
+                <a href="{{ action('TipoProdutoController@create') }}" class="btn btn-success btn-sm">
+                    <i class="fas fa-plus"></i> @lang('botao.Incluir')
+                </a>
+                @endif
             </div>
             <div class="card-body">
                 @if(isset($tiposproduto) && count($tiposproduto) > 0)
@@ -42,10 +37,14 @@
                                         <td>{{ $i->tpp_descricao }}</td>
                                         <td class="text-right">
                                             <div class="btn-group ml-auto">
+                                                @if(Auth::user()->hasRole(trans('roles.tipoProdutoUpdate')))
                                                 <a href="{{ action('TipoProdutoController@update',$i->tpp_codigo) }}" class="btn btn-sm btn-outline-light">@lang('botao.Editar')</a>
+                                                @endif
+                                                @if(Auth::user()->hasRole(trans('roles.tipoProdutoDelete')))
                                                 <a href="{{ action('TipoProdutoController@delete',$i->tpp_codigo) }}" class="btn btn-sm btn-outline-light">
                                                     <i class="far fa-trash-alt"></i>
                                                 </a>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

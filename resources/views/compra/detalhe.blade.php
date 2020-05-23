@@ -1,5 +1,6 @@
 @extends('temps.master')
 @section('title', trans('compra.title'))
+@section('title-icone', 'fas fa-dolly')
 
 @section('css-view')
 @endsection
@@ -9,21 +10,13 @@
 
 @section('conteudo-view')
 <div class="row">
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="page-header border-bottom">
-            <h2 class="pageheader-title  d-inline-block"><i class="fas fa-dolly"></i> @lang('compra.title')</h2>
-        </div>
-    </div>
-</div>
-
-@include('temps.forms.message')
-
-<div class="row">
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header">
                 <h4 class="card-title">@lang('compra.subTitleDetalhe')</h4>
-                <a href="javascript:history.back()" class="btn btn-outline-light btn-sm"><i class="fas fa-angle-left"></i> @lang('botao.Voltar')</a>
+                <a href="{{ URL::previous() }}" class="btn btn-outline-light btn-sm">
+                    <i class="fas fa-angle-left"></i> @lang('botao.Voltar')
+                </a>
             </div>
 			<div class="card-body">
                 <div class="row">
@@ -104,21 +97,21 @@
         <div class="card">
 			<div class="card-header">
                 <h4 class="card-title">@lang('notaFiscal.subTitleDetalhe')</h4>
+                @if(Auth::user()->hasRole(trans('roles.notaFiscalRead')))
                 <a href="{{ action('NotaFiscalController@detalhe',$compra->notafiscal->nf_codigo) }}" class="btn btn-primary btn-sm">@lang('botao.Detalhes')</a>
+                @endif
             </div>
 			<div class="card-body">
                 <div class="row">
                     <div class="col-12 col-md-12 col-xl-4">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <tbody>
-                                    @include('temps.tables.trHorizontal',['label' => __('label.Codigo'), 'value' => $compra->notafiscal->nf_codigo])
-                                    @include('temps.tables.trHorizontal',['label' => __('label.TaxaImpostoNf'), 'value' => $compra->notafiscal->nf_taxaimpostonf . '%'])
-                                    @include('temps.tables.trHorizontal',['label' => __('label.ValorImposto'), 'value' => 'R$ ' . ViewHelper::getValorMonetarioFormat($compra->notafiscal->nf_valorimposto)])
-                                    @include('temps.tables.trHorizontal',['label' => __('label.ValorNf'), 'value' => 'R$ ' . ViewHelper::getValorMonetarioFormat($compra->notafiscal->nf_valornf)])
-                                </tbody>
-                            </table>
-                        </div>
+                        <table class="table">
+                            <tbody>
+                                @include('temps.tables.trHorizontal',['label' => __('label.Codigo'), 'value' => $compra->notafiscal->nf_codigo])
+                                @include('temps.tables.trHorizontal',['label' => __('label.TaxaImpostoNf'), 'value' => $compra->notafiscal->nf_taxaimpostonf . '%'])
+                                @include('temps.tables.trHorizontal',['label' => __('label.ValorImposto'), 'value' => 'R$ ' . ViewHelper::getValorMonetarioFormat($compra->notafiscal->nf_valorimposto)])
+                                @include('temps.tables.trHorizontal',['label' => __('label.ValorNf'), 'value' => 'R$ ' . ViewHelper::getValorMonetarioFormat($compra->notafiscal->nf_valornf)])
+                            </tbody>
+                        </table>
                     </div>
                     <div class="col-12 col-md-6 col-xl-4">
                         <div class="card">

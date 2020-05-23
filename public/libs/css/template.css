@@ -3089,9 +3089,10 @@ btn-link
     float:right;
 }
 
-.card-title {
+.card-header h4,.card-title {
     display: inline-block;
     margin-bottom: 0px;
+    vertical-align: text-top;
 }
 
 .card-subtitle {
@@ -4369,7 +4370,9 @@ Pills vertical
 /*-----------------------
 5.1.  General
 --------------------*/
-
+.table-responsive .table{
+    min-width: 400px;
+}
 .table {
     margin-bottom: 0px;
 }
@@ -4399,7 +4402,7 @@ Pills vertical
 
 .table-bordered td,
 .table-bordered th {
-    border: 1px solid #e6e6f2;
+    border: 1px solid #4e4f56;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {

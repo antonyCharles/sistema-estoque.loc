@@ -32,4 +32,13 @@ return [
     'MessagemVazia' => 'Mensagem de retorno não foi informada!',
 
     'txtDireitos' => 'Todos os Direitos Reservados',
+
+    'groups' => 'Grupo Parâmetros',
+    'parameters' => 'Parâmetros',
+    'parametersProfiles' => 'Parâmetro perfil',
+    'profiles' => 'Perfil',
+    'settings' => 'Configurações',
+    'system' => 'Sistema',
+    'types' => 'Tipos',
+    'users' => 'Usuários'
 ];

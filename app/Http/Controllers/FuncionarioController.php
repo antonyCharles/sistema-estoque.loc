@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\FuncionarioRequest;
+use App\Http\Requests\FuncionarioUpdateRequest;
 use App\Repositories\Interfaces\IFuncionarioRepository;
+use App\Repositories\Interfaces\IProfileRepository;
 use App\Enums\SexoEnum;
 use Exception;
 use Session;
@@ -12,10 +14,15 @@ use Session;
 class FuncionarioController extends Controller
 {
     private $repository;
+    private $profileRepository;
 
-    public function __construct(IFuncionarioRepository $repository)
+    public function __construct(
+        IFuncionarioRepository $repository,
+        IProfileRepository $profileRepository
+    )
     {
         $this->repository = $repository;
+        $this->profileRepository = $profileRepository;
     }
 
     public function list()
@@ -56,6 +63,7 @@ class FuncionarioController extends Controller
     {
         try
         {
+            $this->data['profiles'] = $this->profileRepository->GetProfilesAllSelect();
             $this->data['enumSexo'] = SexoEnum::get();
         }
         catch(Exception $e)
@@ -77,7 +85,7 @@ class FuncionarioController extends Controller
             if($result)
                 return redirect()
                             ->action('FuncionarioController@list')
-                            ->with(['msg-redirect-sucesso' => trans('msgSucessos.SucessoInsert',['item' => $dados['fun_nome']])]);
+                            ->with(['msg-redirect-sucesso' => trans('msgSucessos.SucessoInsert',['item' => $dados['name']])]);
         }
         catch(Exception $e)
         {
@@ -92,6 +100,7 @@ class FuncionarioController extends Controller
         try
         {
             $this->data['funcionario'] = $this->repository->getId($id);
+            $this->data['profiles'] = $this->profileRepository->GetProfilesAllSelect();
             $this->data['enumSexo'] = SexoEnum::get();
 
             if($this->data['funcionario'] == null)
@@ -106,7 +115,7 @@ class FuncionarioController extends Controller
         return View('funcionario.update',$this->data);
     }
 
-    public function updatePost(int $id,FuncionarioRequest $request)
+    public function updatePost(int $id,FuncionarioUpdateRequest $request)
     {
         $msg = "";
         try
@@ -121,7 +130,7 @@ class FuncionarioController extends Controller
             if($result)
                 return redirect()
                             ->action('FuncionarioController@list')
-                            ->with(['msg-redirect-sucesso' => trans('msgSucessos.SucessoUpdate',['item' => $dados['fun_nome']])]);
+                            ->with(['msg-redirect-sucesso' => trans('msgSucessos.SucessoUpdate',['item' => $dados['name']])]);
         }
         catch(Exception $e)
         {

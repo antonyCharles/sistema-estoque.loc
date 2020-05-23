@@ -24,7 +24,7 @@ class FuncionarioRequest extends FormRequest
     public function rules()
     {
         return [
-            'fun_nome' => 'required|max:80',
+            'name' => 'required|max:80',
             'fun_endereco' => 'required|max:80',
             'fun_numero' => 'required|max:20',
             'fun_bairro' => 'required|max:80',
@@ -36,15 +36,18 @@ class FuncionarioRequest extends FormRequest
             'fun_nascimento' => 'required|date',
             'fun_telefone' => 'max:10',
             'fun_celular' => 'max:10',
-            'fun_email' => 'required|email|max:80',
-            'fun_salario' => 'required'
+            'email' => 'required|email|max:80',
+            'fun_salario' => 'required',
+            'password' => 'required|max:40',
+            'passwordCheck' => 'required|same:password',
+            'profile_id' => 'required|max:1',
         ];
     }
 
     public function attributes()
     {
         return [
-            'for_nome' => __('label.Nome'),
+            'name' => __('label.Nome'),
             'fun_endereco' => __('label.Endereco'),
             'fun_numero' => __('label.Numero'),
             'fun_complemento' => __('label.Complemento'),
@@ -57,8 +60,11 @@ class FuncionarioRequest extends FormRequest
             'fun_nascimento' => __('label.DtNascimento'),
             'fun_telefone' => __('label.Telefone'),
             'fun_celular' => __('label.Celular'),
-            'fun_email' => __('label.Email'),
-            'fun_salario' => __('label.Salario')
+            'email' => __('label.Email'),
+            'fun_salario' => __('label.Salario'),
+            'password' => __('label.Password'),
+            'passwordCheck' => __('label.PasswordCheck'),
+            'profile_id' => __('label.Profile'),
         ];
     }
 }

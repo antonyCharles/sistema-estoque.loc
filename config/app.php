@@ -233,6 +233,9 @@ return [
 
         'ViewHelper' => App\Helpers\ViewHelper::class,
 
+        'DateHelper' => App\Helpers\DateHelper::class,
+        'EnumHelper' => App\Helpers\EnumHelper::class,
+
     ],
 
 ];

@@ -1,5 +1,6 @@
 @extends('temps.master')
 @section('title', trans('compra.title'))
+@section('title-icone', 'fas fa-dolly')
 
 @section('css-view')
 @endsection
@@ -9,21 +10,15 @@
 
 @section('conteudo-view')
 <div class="row">
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="page-header border-bottom">
-            <h2 class="pageheader-title  d-inline-block"><i class="fas fa-dolly"></i> @lang('compra.title')</h2>
-        </div>
-    </div>
-</div>
-
-@include('temps.forms.message')
-
-<div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">@lang('compra.subTitleListar')</h4>
-                <a href="{{ action('CompraController@create') }}" class="btn btn-success btn-sm">@lang('botao.Incluir')</a>
+                @if(Auth::user()->hasRole(trans('roles.compraCreate')))
+                <a href="{{ action('CompraController@create') }}" class="btn btn-success btn-sm">
+                    <i class="fas fa-plus"></i> @lang('botao.Incluir')
+                </a>
+                @endif
             </div>
             <div class="card-body">
                 @if(isset($compras) && count($compras) > 0)
@@ -51,12 +46,20 @@
                                         <td>{{ ViewHelper::getEnumLabel($enumStatus,$i->com_status) }}</td>
                                         <td class="text-right">
                                             <div class="btn-group ml-auto">
+                                                @if(Auth::user()->hasRole(trans('roles.compraRead')))
                                                 <a href="{{ action('CompraController@detalhe', $i->com_codigo) }}" class="btn btn-sm btn-outline-light">@lang('botao.Detalhes')</a>
+                                                @endif
+                                                @if(Auth::user()->hasRole(trans('roles.compraUpdate')))
                                                 <a href="{{ action('CompraController@update', $i->com_codigo) }}" class="btn btn-sm btn-outline-light">@lang('botao.Alterar')</a>
+                                                @endif
+                                                @if(Auth::user()->hasRole(trans('roles.compraClonar')))
                                                 <a href="{{ action('CompraController@clonar', $i->com_codigo) }}" class="btn btn-sm btn-outline-light">@lang('botao.Clonar')</a>
+                                                @endif
+                                                @if(Auth::user()->hasRole(trans('roles.compraDelete')))
                                                 <a href="{{ action('CompraController@delete', $i->com_codigo) }}" class="btn btn-sm btn-outline-light">
                                                     <i class="far fa-trash-alt"></i>
                                                 </a>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

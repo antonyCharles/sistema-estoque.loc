@@ -1,5 +1,6 @@
 @extends('temps.master')
 @section('title', trans('funcionario.title'))
+@section('title-icone', 'fas fa-users')
 
 @section('css-view')
 
@@ -12,30 +13,22 @@
 
 @section('conteudo-view')
 <div class="row">
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="page-header border-bottom">
-            <h2 class="pageheader-title  d-inline-block"><i class="fas fa-users"></i> @lang('funcionario.title')</h2>
-        </div>
-    </div>
-</div>
-
-@include('temps.forms.message')
-
-<div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">@lang('funcionario.subTitleCadastrar')</h4>
-                <a href="javascript:history.back()" class="btn btn-outline-light btn-sm"><i class="fas fa-angle-left"></i> @lang('botao.Voltar')</a>
+                <a href="{{ URL::previous() }}" class="btn btn-outline-light btn-sm">
+                    <i class="fas fa-angle-left"></i> @lang('botao.Voltar')
+                </a>
             </div>
             <div class="card-body">
                 {!! Form::open(['action' => array('FuncionarioController@createPost'), 'method' => 'post', 'class' => 'needs-validation', 'novalidate']) !!}
                     <div class="row">
                         <div class="col-12 col-md-3">
                             @include('temps.forms.input',[
-                                        'input' => 'fun_nome', 
+                                        'input' => 'name', 
                                         'label' => trans('label.Nome'), 
-                                        'value' => old('fun_nome'), 
+                                        'value' => old('name'), 
                                         'attr' => ['class' => 'form-control', 'id' => 'fun_nome','required']])
                         </div>
                         <div class="col-12 col-md-3">
@@ -47,9 +40,9 @@
                         </div>
                         <div class="col-12 col-md-3">
                             @include('temps.forms.input',[
-                                        'input' => 'fun_email', 
+                                        'input' => 'email', 
                                         'label' => trans('label.Email'), 
-                                        'value' => old('fun_email'), 
+                                        'value' => old('email'), 
                                         'attr' => ['class' => 'form-control', 'id' => 'fun_email','required']])
                         </div>
                         <div class="col-12 col-md-3">
@@ -98,6 +91,28 @@
                                         'label' => trans('label.Salario'), 
                                         'value' => ViewHelper::getValorMonetarioFormat(old('fun_salario')), 
                                         'attr' => ['class' => 'form-control valor-monetario', 'id' => 'fun_salario','required']])
+                        </div>
+                        <div class="col-12 col-md-3">
+                            @include('temps.forms.password',[
+                                        'input' => 'password', 
+                                        'label' => trans('label.Password'), 
+                                        'value' => old('password'), 
+                                        'attr' => ['class' => 'form-control', 'id' => 'password','required']])
+                        </div>
+                        <div class="col-12 col-md-3">
+                            @include('temps.forms.password',[
+                                        'input' => 'passwordCheck', 
+                                        'label' => trans('label.PasswordCheck'), 
+                                        'value' => old('passwordCheck'), 
+                                        'attr' => ['class' => 'form-control', 'id' => 'passwordCheck','required']])
+                        </div>
+                        <div class="col-12 col-md-3">
+                            @include('temps.forms.select',[
+                                        'input' => 'profile_id',
+                                        'label' => trans('label.Profile'), 
+                                        'value' => old('profile_id') , 
+                                        'list' => $profiles, 
+                                        'attr' => ['placeholder' => trans('global.selecione'),'class' => 'form-control', 'id' => 'profile_id','required']])
                         </div>
                     </div>
                     <hr>
