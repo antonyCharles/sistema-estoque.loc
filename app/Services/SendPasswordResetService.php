@@ -16,15 +16,11 @@ class SendPasswordResetService extends Service
     private $passwordResetRepository;
     private $funcionarioRepository;
 
-    public function __construct(
-        string $email, 
-        IPasswordResetRepository $passwordResetRepository,
-        IFuncionarioRepository $funcionarioRepository
-    )
+    public function __construct(string $email)
     {
         $this->email = $email;
-        $this->passwordResetRepository = $passwordResetRepository;
-        $this->funcionarioRepository = $funcionarioRepository;
+        $this->passwordResetRepository = resolve('App\Repositories\Interfaces\IPasswordResetRepository');
+        $this->funcionarioRepository = resolve('App\Repositories\Interfaces\IFuncionarioRepository');
         
     }
 

@@ -63,10 +63,14 @@ class FuncionarioRepository extends Repository implements IFuncionarioRepository
 		try
 		{
 			$user = User::where('email',$email)->first();
+
+			if($user == null)
+				throw new Exception("Valor nulo!");
+
 		}
 		catch(Exception $e)
 		{
-			throw new Exception(trans('exceptions.querySelect', ['message' => $e->getMessage()]));
+			throw new Exception("Nenhum usuário encontrado para o email informado!");
 		}
 
 		return $user;

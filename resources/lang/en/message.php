@@ -16,5 +16,5 @@ return [
     'successSendResetPassword' => 'E-mail para redefinir a senha enviada com sucesso para você!',
     'successUpdate' => ':item - Alterado com sucesso!',
 
-    'tabelaSemRegistros' => 'sem registros encontrados!',
+    'tabelaSemRegistros' => 'Nenhum registro encontrado!',
 ];

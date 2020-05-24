@@ -27,6 +27,7 @@ return [
     'alertErroForm' => 'Atenção Erros:',
     'selecione' => 'Selecione...',
     'prencherCampo' => 'Preenchimento obrigatório!',
+    'prencherCampoEmail' => 'Preenchimento obrigatório com email!',
     'erroMessage' => 'Erro de mensagem!',
     'selecioneItem' => 'Selecione um item!',
     'MessagemVazia' => 'Mensagem de retorno não foi informada!',

@@ -2,9 +2,11 @@
 
 namespace App\Repositories;
 
+use Exception;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 use App\Models\PasswordReset;
 use App\Repositories\Interfaces\IPasswordResetRepository;
-use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -47,7 +49,7 @@ class PasswordResetRepository implements IPasswordResetRepository
 	{
 		try
 		{
-			$this->where($column,'=',$value)->delete();
+			PasswordReset::where($column,'=',$value)->delete();
 		}
 		catch(Exception $e)
 		{

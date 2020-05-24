@@ -18,19 +18,20 @@
     <div class="dashboard-main-wrapper">
         <div class="dashboard-header">
             <nav class="navbar navbar-expand-lg bg-white fixed-top">
-                <a class="navbar-brand" href="{!! url('/'); !!}">Fatec <span>Sistema de Estoque</span></a>
+                <a class="navbar-brand" href="{!! url('/'); !!}">Fat <span>Sistema de Estoque</span></a>
                 <div class="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto navbar-right-top">
                         <li class="nav-item dropdown nav-user">
                             <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset('images/avatar-1.jpg') }}" alt="" class="user-avatar-md rounded-circle"></a>
                             <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                                 <div class="nav-user-info">
-                                    <h5 class="mb-0 text-white nav-user-name">Antony Charles</h5>
-                                    <span class="status"></span><span class="ml-2">charles@gmail.com</span>
+                                    <h5 class="mb-0 text-white nav-user-name">{{ Auth::user()->name }}</h5>
+                                    <span class="status"></span><span class="ml-2">{{ Auth::user()->email }}</span>
                                 </div>
-                                <a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i> @lang('global.aTxtConta')</a>
-                                <a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i> @lang('global.aTxtConfiguracao')</a>
-                                <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i> @lang('global.aTxtSair')</a>
+                                <!--<a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i> @lang('global.aTxtConfiguracao')</a>-->
+                                <a class="dropdown-item" href="{{ action('Auth\LoginController@logout') }}">
+                                    <i class="fas fa-power-off mr-2"></i> @lang('global.aTxtSair')
+                                </a>
                             </div>
                         </li>
                     </ul>
@@ -61,7 +62,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                                © 2018 FATEC - Sistema de Estoque. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>.
+                                © 2018 FAT - Sistema de Estoque. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>.
                             </div>
                         </div>
                     </div>

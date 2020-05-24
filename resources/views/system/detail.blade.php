@@ -85,7 +85,7 @@ $('.tree').treegrid();
         <h4 class="card-title">@lang('titles.rolesActionsTitle')</h4>
         @if(Auth::user()->hasRole(trans('roles.roleActionCreate')))
         <a href="{{ action('RoleActionController@create') }}" class="btn btn-sm btn-primary">
-            <i class="fas fa-angle-left"></i> @lang('botao.Voltar')
+            <i class="far fa-edit"></i> @lang('button.create')
         </a>
         @endif
     </div>

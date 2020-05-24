@@ -23,7 +23,8 @@ include 'groups/settings.php';
 
 Route::group(['middleware'=>['auth']], function(){
 
-    Route::get('/', function () {return view('welcome');});
+    Route::get('/','HomeController@Index')->name('dashboard');
+    Route::get('/no-access', 'HomeController@SemAcesso')->name('no-access');
 
     Route::get('/funcionario', 'FuncionarioController@list')->middleware('role:'.trans('roles.userRead'));
     Route::get('/funcionario/{id}/detalhe', 'FuncionarioController@detalhe')->middleware('role:'.trans('roles.userRead'));
