@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\StatusEnum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use App\Http\Requests\CompraRequest;
 use App\Http\Requests\CompraUpdateRequest;
-use App\Enums\StatusEnum;
 use App\Repositories\Interfaces\ICompraRepository;
 use App\Repositories\Interfaces\IFornecedorRepository;
 use App\Repositories\Interfaces\ITipoPagtoRepository;

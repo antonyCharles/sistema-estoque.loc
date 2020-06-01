@@ -72,7 +72,7 @@ class CompraRepository extends Repository implements ICompraRepository
 			$itensCompras = collect();
 			$dados['com_valortotal'] = $this->itensCompraRepository->createListItensCompraforCompra($dados,$itensCompras);
 
-			if($dados['com_criar_notafiscal'] == 'S')
+			if(isset($dados['com_criar_notafiscal']) && $dados['com_criar_notafiscal'] == 'S')
 			{
 				$dados['nf_codigo'] = $this->notaFiscalRepository->insertForCompra($dados['com_valortotal'], 0, 0, $dados['tpg_codigo']);
 			}
@@ -85,7 +85,7 @@ class CompraRepository extends Repository implements ICompraRepository
 		}
 		catch(Exception $e)
 		{
-			if($compra->com_codigo != null)
+			if(isset($compra) && $compra->com_codigo != null)
 			{
 				$this->itensCompraRepository->delete($compra->com_codigo,'com_codigo');
 				$this->delete($compra->com_codigo,'com_codigo');

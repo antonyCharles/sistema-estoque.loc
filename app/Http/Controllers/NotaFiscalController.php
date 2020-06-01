@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\StatusEnum;
 use Illuminate\Http\Request;
 use App\Http\Requests\NotaFiscalRequest;
 use App\Repositories\Interfaces\INotaFiscalRepository;
@@ -36,6 +37,7 @@ class NotaFiscalController extends Controller
         try
         {
             $this->data['notaFiscal'] = $this->repository->getId($id);
+            $this->data['enumStatus'] = StatusEnum::get();
 
             if($this->data['notaFiscal'] == null)
                 throw new Exception(trans('msgErros.ItemIdNaoEncontrado',['id' => $id]));

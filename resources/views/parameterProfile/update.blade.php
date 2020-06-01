@@ -39,8 +39,10 @@ $(document).ready(function() {
         <h4>@lang('titles.addParameterProfile')</h4>
     </div>
     <div class="card-body">
+        @if(Auth::user()->hasRole(trans('roles.parameterProfileUpdate')))
         {!! Form::open(['action' => array('ParameterProfileController@updatePost',$profile->profile_id), 'method' => 'post', 'class' => 'needs-validation', 'novalidate']) !!}
             {!! Form::hidden('profile_id',$profile->profile_id) !!}
+        @endif
 
             @if(isset($groupsParameters) && count($groupsParameters) > 0)
                 
@@ -124,12 +126,14 @@ $(document).ready(function() {
                 </div>
             @endif
             <br/>
+        @if(Auth::user()->hasRole(trans('roles.parameterProfileUpdate')))
             <div class="row t-2">
                 <div class="col-12 text-right">
                     {!! Form::submit(trans('button.update'),  ['class' => 'btn btn-primary']) !!}
                 </div>
             </div>
         {!! Form::close() !!}
+        @endif
     </div>
 </div>
 @endsection

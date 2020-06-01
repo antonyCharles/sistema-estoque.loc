@@ -4,13 +4,26 @@ namespace App\Http\Controllers\Auth;
 
 use Exception;
 use Illuminate\Http\Request;
-use App\Models\PasswordResets;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use App\Repositories\Interfaces\IPasswordResetRepository;
+use App\Repositories\Interfaces\IFuncionarioRepository;
 
 class ResetPasswordController extends Controller
 {
+    private $repository;
+    private $userRepository;
+
+    public function __construct(
+        IPasswordResetRepository $repository,
+        IFuncionarioRepository $userRepository
+    )
+    {
+        $this->repository = $repository;
+        $this->userRepository = $userRepository;
+    }
+
     public function resetPassword(string $token)
     {
         try
@@ -36,8 +49,7 @@ class ResetPasswordController extends Controller
 
             $passwordReset = $this->requestPasswordReset($token);
 
-            $serUser = new User();
-            $result = $serUser->updateUserPassword($passwordReset->email, $request->password);
+            $result = $this->userRepository->updateUserPassword($passwordReset->email, $request->password);
 
             if($result)
                 $this->requestRemovePasswordReset($passwordReset->email);
@@ -54,8 +66,7 @@ class ResetPasswordController extends Controller
 
     private function requestPasswordReset(string $token)
     {
-        $mPasswordResets = new PasswordResets();
-        $passwordReset = $mPasswordResets->getPasswordResetsByToken($token);
+        $passwordReset = $this->repository->getPasswordResetsByToken($token);
 
         if(!$passwordReset)
             throw new Exception(trans('excPasswordReset.tokenInvalid'));
@@ -67,8 +78,7 @@ class ResetPasswordController extends Controller
     {
         try
         {
-            $mPasswordResets = new PasswordResets();
-            $result = $mPasswordResets->removePasswordReset($email);
+            $result = $this->repository->removePasswordReset($email);
         }
         catch(Exception $e)
         {

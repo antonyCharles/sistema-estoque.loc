@@ -24,4 +24,14 @@ class NotaFiscal extends Model
     {
         return $this->hasMany('App\Models\ContaPagar','nf_codigo');
     }
+
+    public function compras()
+    {
+        return $this->hasMany('App\Models\Compra','nf_codigo');
+    }
+
+    public function vendas()
+    {
+        return $this->hasMany('App\Models\Venda','nf_codigo');
+    }
 }

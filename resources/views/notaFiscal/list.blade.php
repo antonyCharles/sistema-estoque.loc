@@ -31,8 +31,8 @@
                                     <th scope="col">@lang('label.ValorNf')</th>
                                     <th scope="col">@lang('label.TaxaImpostoNf')</th>
                                     <th scope="col">@lang('label.ValorImposto')</th>
-                                    <th scope="col">@lang('contaReceber.title')</th>
-                                    <th scope="col">@lang('contaPagar.title')</th>
+                                    <th class="text-center" scope="col">@lang('contaReceber.title')</th>
+                                    <th class="text-center" scope="col">@lang('contaPagar.title')</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -43,8 +43,24 @@
                                         <td>{{ 'R$ ' . ViewHelper::getValorMonetarioFormat($i->nf_valornf) }}</td>
                                         <td>{{ $i->nf_taxaimpostonf }}%</td>
                                         <td>{{ 'R$ ' . ViewHelper::getValorMonetarioFormat($i->nf_valorimposto) }}</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td class="text-center">
+                                            @if($i->contasReceber->count() > 0)
+                                                {{ $i->contasReceber->where('cr_datarecebimento','!=',null)->count() }}
+                                                pago de
+                                                {{ $i->contasReceber->count() }}
+                                            @else
+                                                - 
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if($i->contasPagar->count() > 0)
+                                                {{ $i->contasPagar->where('cp_datapagamento','!=',null)->count() }}
+                                                pago de
+                                                {{ $i->contasPagar->count() }}
+                                            @else
+                                                - 
+                                            @endif
+                                        </td>
                                         <td class="text-right">
                                             <div class="btn-group ml-auto">
                                                 @if(Auth::user()->hasRole(trans('roles.notaFiscalRead')))

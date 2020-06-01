@@ -2,7 +2,6 @@
 @section('title', trans('titles.forgotPasswordTitle'))
 
 
-@section('content-view')
 @section('conteudo-view')
 <div class="splash-container">
     <div class="card ">

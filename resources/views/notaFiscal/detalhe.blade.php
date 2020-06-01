@@ -152,6 +152,78 @@
             @endif
 			</div>
 		</div>
+
+        <div class="card">
+			<div class="card-header">
+                <h4 class="card-title">@lang('compra.subTitleListar')</h4>
+           </div>
+			<div class="card-body">
+            @if(isset($notaFiscal->compras) && count($notaFiscal->compras) > 0)
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">@lang('label.Fornecedor')</th>
+                                <th scope="col">@lang('label.DataCompra')</th>
+                                <th scope="col">@lang('label.ValorTotal')</th>
+                                <th scope="col">@lang('label.Status')</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($notaFiscal->compras as $i)
+                                <tr>
+                                    <td>{{ $i->fornecedor->for_nome }}</td>
+                                    <td>{{ ViewHelper::getDateFormat($i->com_datacompra) }}</td>
+                                    <td>R$ {{ ViewHelper::getValorMonetarioFormat($i->com_valortotal) }}</td>
+                                    <td>{{ ViewHelper::getEnumLabel($enumStatus,$i->com_status) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <div class="alert alert-secondary" role="alert">
+                    @lang('msg.tabelaSemRegistros')
+                </div>
+            @endif
+			</div>
+		</div>
+
+        <div class="card">
+			<div class="card-header">
+                <h4 class="card-title">@lang('venda.subTitleListar')</h4>
+           </div>
+			<div class="card-body">
+            @if(isset($notaFiscal->vendas) && count($notaFiscal->vendas) > 0)
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">@lang('label.Funcionario')</th>
+                                <th scope="col">@lang('label.DataVenda')</th>
+                                <th scope="col">@lang('label.ValorTotal')</th>
+                                <th scope="col">@lang('label.Status')</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($notaFiscal->vendas as $i)
+                                <tr>
+                                    <td>{{ $i->funcionario->name }}</td>
+                                    <td>{{ ViewHelper::getDateFormat($i->ven_datavenda) }}</td>
+                                    <td>R$ {{ ViewHelper::getValorMonetarioFormat($i->ven_valortotal) }}</td>
+                                    <td>{{ ViewHelper::getEnumLabel($enumStatus,$i->ven_status) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <div class="alert alert-secondary" role="alert">
+                    @lang('msg.tabelaSemRegistros')
+                </div>
+            @endif
+			</div>
+		</div>
 	</div>
 </div>
 

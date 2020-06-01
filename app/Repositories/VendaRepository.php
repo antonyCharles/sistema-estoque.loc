@@ -53,7 +53,7 @@ class VendaRepository extends Repository implements IVendaRepository
 	public function getId(int $id) : Venda
 	{
 		try{
-			return Venda::with('itensvendas','notafiscal')->find($id);
+			return Venda::with('itensvendas','notafiscal','funcionario')->find($id);
 		}
 		catch (QueryException $e)
 		{
@@ -83,7 +83,7 @@ class VendaRepository extends Repository implements IVendaRepository
 		}
 		catch(Exception $e)
 		{
-			if($venda->ven_codigo != null)
+			if(isset($venda) && $venda->ven_codigo != null)
 			{
 				$this->itensVendaRepository->delete($venda->ven_codigo,'ven_codigo');
 				$this->delete($venda->ven_codigo,'ven_codigo');

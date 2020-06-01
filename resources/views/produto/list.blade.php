@@ -29,6 +29,7 @@
                                 <tr>
                                     <th scope="col">@lang('label.Descricao')</th>
                                     <th scope="col">@lang('label.TipoProduto')</th>
+                                    <th scope="col">@lang('label.PrecoCusto')</th>
                                     <th scope="col">@lang('label.PrecoVenda')</th>
                                     <th scope="col">@lang('label.Estoque')</th>
                                     <th></th>
@@ -39,6 +40,7 @@
                                     <tr>
                                         <td>{{ $i->pro_descricao }}</td>
                                         <td>{{ $i->tipoProduto->tpp_descricao }}</td>
+                                        <td>R$ {{ ViewHelper::getValorMonetarioFormat($i->pro_precocusto) }}</td>
                                         <td>R$ {{ ViewHelper::getValorMonetarioFormat($i->pro_precovenda) }}</td>
                                         <td>{{ $i->pro_estoque }}</td>
                                         <td class="text-right">

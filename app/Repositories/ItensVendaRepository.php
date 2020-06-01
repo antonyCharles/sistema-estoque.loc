@@ -90,7 +90,7 @@ class ItensVendaRepository extends Repository implements IItensVendaRepository
 				$item->pro_codigo = $pro->pro_codigo;
 				$item->itv_embalagem = $pro->pro_embalagem;
 				$item->itv_qtde = $dados['ven_quantidade'][$i];
-				$item->itv_valorun = $pro->pro_precocusto;
+				$item->itv_valorun = $pro->pro_precovenda;
 				$item->itv_desc = MonetarioHelper::fromatarValorDB($dados['ven_desconto'][$i]);
 				$item->itv_valortotal = $valorTotal;
 

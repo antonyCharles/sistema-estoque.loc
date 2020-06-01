@@ -40,8 +40,9 @@
             
             @if(Auth::user()->hasRole(trans('roles.fornecedorRead')))
             <li class="nav-item border-bottom">
-                <a class="nav-link" href="{{ action('FornecedorController@list') }}"><i
-                        class="fas fa-building"></i>@lang('global.aTxtFornecedor')</a>
+                <a class="nav-link" href="{{ action('FornecedorController@list') }}">
+                    <i class="fas fa-building"></i>@lang('global.aTxtFornecedor')
+                </a>
             </li>
             @endif
             
@@ -71,12 +72,18 @@
             </li>
             @endif
 
+            @if(Auth::user()->hasRole(trans('roles.userRead')))
+            <li class="nav-item border-bottom">
+                <a class="nav-link" href="{{ action('FuncionarioController@list') }}">
+                    <i class="fas fa-user"></i>@lang('global.aTxtFuncionario')
+                </a>
+            </li>
+            @endif
             
             @if(
                 Auth::user()->hasAnyRole([
                     trans('roles.parameter'),
                     trans('roles.groupParameter'),
-                    trans('roles.user'),
                     trans('roles.profile'),
                     trans('roles.system')])
             )
@@ -96,12 +103,6 @@
                         @if(Auth::user()->hasRole(trans('roles.groupParameterRead')))
                         <li class="nav-item">
                             <a href="{{ action('GroupParameterController@list') }}" class="nav-link">@lang('global.groups')</a>
-                        </li>
-                        @endif
-                        
-                        @if(Auth::user()->hasRole(trans('roles.userRead')))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ action('FuncionarioController@list') }}">@lang('global.aTxtFuncionario')</a>
                         </li>
                         @endif
                         

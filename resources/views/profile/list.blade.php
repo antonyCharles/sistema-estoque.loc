@@ -42,7 +42,7 @@
                                     @if(Auth::user()->hasRole(trans('roles.profileUpdate')))
                                     <a href="{{ action('ProfileController@update',$i->profile_id) }}" class="btn btn-sm btn-outline-light">@lang('button.update')</a>
                                     @endif
-                                    @if(Auth::user()->hasRole(trans('roles.parameterProfileUpdate')))
+                                    @if(Auth::user()->hasRole(trans('roles.parameterProfileRead')))
                                     <a href="{{ action('ParameterProfileController@update',$i->profile_id) }}" class="btn btn-sm btn-outline-light">@lang('button.parameterProfile')</a>
                                     @endif
                                     @if(Auth::user()->hasRole(trans('roles.roleProfileRead')))

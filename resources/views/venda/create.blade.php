@@ -113,7 +113,10 @@
                                                     <select class="form-control sel-lista-produtos" required="" name="pro_codigo[]">
                                                         <option value="">Selecione...</option>
                                                         @foreach($produtos as $k)
-                                                            <option value="{{ $k->pro_codigo }}" <?= $pro_codigo[$i] == $k->pro_codigo ? 'selected' : ''; ?>  data-precovenda="{{ ViewHelper::getValorMonetarioFormat($k->pro_precocusto) }}">{{ $k->pro_descricao }}</option>
+                                                            <option value="{{ $k->pro_codigo }}" 
+                                                                <?= $pro_codigo[$i] == $k->pro_codigo ? 'selected' : ''; ?> 
+                                                                data-precovenda="{{ ViewHelper::getValorMonetarioFormat($k->pro_precovenda) }}">
+                                                                    {{ $k->pro_descricao }}</option>
                                                         @endforeach
                                                     </select>
                                                     <div class="invalid-feedback">
@@ -138,11 +141,11 @@
                                                 </div>
                                                 <?php 
                                                     $prodAtual = $produtos->find($pro_codigo[$i]); 
-                                                    $valorTotal = ($prodAtual->pro_precocusto * $ven_quantidade[$i]) - ViewHelper::converterInNumber($ven_desconto[$i]);
+                                                    $valorTotal = ($prodAtual->pro_precovenda * $ven_quantidade[$i]) - ViewHelper::converterInNumber($ven_desconto[$i]);
                                                     $valorTotalTotal += ($valorTotal >= 0 ? $valorTotal : 0);
                                                 ?>
                                             </td>
-                                            <td class="td-preco-unico">R$ {{ ViewHelper::getValorMonetarioFormat($prodAtual->pro_precocusto) }}</td>
+                                            <td class="td-preco-unico">R$ {{ ViewHelper::getValorMonetarioFormat($prodAtual->pro_precovenda) }}</td>
                                             <td class="td-valor-total" data-valor-total="{{ $valorTotal }}" >R$ {{ ViewHelper::getValorMonetarioFormat(($valorTotal >= 0 ? $valorTotal : '0.00')) }}</td>
                                             <td class="text-right">
                                                 <button type="button" class="btn btn-danger btn-sm remove-item-lista">
@@ -208,7 +211,7 @@
                 <select class="form-control sel-lista-produtos" required="" name="pro_codigo[]">
                     <option value="">Selecione...</option>
                     @foreach($produtos as $k)
-                        <option value="{{ $k->pro_codigo }}" data-precovenda="{{ ViewHelper::getValorMonetarioFormat($k->pro_precocusto) }}">{{ $k->pro_descricao }}</option>
+                        <option value="{{ $k->pro_codigo }}" data-precovenda="{{ ViewHelper::getValorMonetarioFormat($k->pro_precovenda) }}">{{ $k->pro_descricao }}</option>
                     @endforeach
                 </select>
                 <div class="invalid-feedback">

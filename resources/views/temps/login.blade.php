@@ -11,7 +11,7 @@
     html,body {height: 100%;}
     body {display: -ms-flexbox;display: flex;-ms-flex-align: center;align-items: center;padding-top: 40px;padding-bottom: 40px;}
     .navbar-brand{padding:0px;}
-    .alert b, .alert a, .alert hr{display:none;}
+    .alert-danger b, .alert a, .alert hr{display:none;}
     .alert ul{list-style-type: none;padding:0px;margin:0px;}
     </style>
 </head>

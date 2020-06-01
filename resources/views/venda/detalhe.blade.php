@@ -25,7 +25,7 @@
                             <table class="table">
                                 <tbody>
                                     @include('temps.tables.trHorizontal',['label' => __('label.Codigo'), 'value' => $venda->ven_codigo])
-                                    @include('temps.tables.trHorizontal',['label' => __('label.Funcionario'), 'value' => $venda->funcionario->fun_nome])
+                                    @include('temps.tables.trHorizontal',['label' => __('label.Funcionario'), 'value' => $venda->funcionario->name])
                                     @include('temps.tables.trHorizontal',['label' => __('label.TipoPagto'), 'value' => $venda->tipopagto->tpg_descricao])
                                     @include('temps.tables.trHorizontal',['label' => __('label.Observacoes'), 'value' => $venda->ven_observacoes])
                                 </tbody>
