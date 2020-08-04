@@ -4,6 +4,8 @@ Projeto desenvolvido na faculdade para disciplina de Linguagem de Programação 
 ![fat-sistema-estoquee](https://user-images.githubusercontent.com/24979597/89249703-4a5e1f00-d5e9-11ea-9bc8-e91d49f0db43.gif)
 
 ## Diagrama entidade relacionamento
+As tabelas que começam com <b>tb_</b> foram passadas pelo requisitante do sistema (professor) e as tabelas que começam com <b>logn_</b> foram ciradas pelo desenvolvedor para ter um sistema de autenticação e autorização mais eficiente.
+
 ![sistema-estoque](https://user-images.githubusercontent.com/24979597/89248272-b2ab0180-d5e5-11ea-9616-c64d6c33c976.png)
 
 ## Requisitos
